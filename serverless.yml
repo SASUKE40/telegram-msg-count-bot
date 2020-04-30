@@ -112,3 +112,24 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+resources: # CloudFormation template syntax from here on.
+  Resources:
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: TelegramMsgCount
+        AttributeDefinitions:
+          - AttributeName: count
+            AttributeType: N
+        KeySchema:
+          - AttributeName: uid
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+plugins:
+  - serverless-dynamodb-local
+custom:
+  dynamodb:
+    stages:
+      - ${self:provider.stage}

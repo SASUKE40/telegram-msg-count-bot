@@ -1,10 +1,42 @@
 'use strict';
 const Telegraf = require('telegraf');
 const bot = new Telegraf(process.env.BOT_TOKEN);
+const AWS = require('aws-sdk');
 
 bot.hears('hi', ctx => ctx.reply('Hey there!'));
 
 module.exports.hello = async event => {
+    const dynamodb = new AWS.DynamoDB({
+        region: 'localhost',
+        endpoint: 'http://localhost:8000',
+    });
+    const params = {
+        RequestItems: {
+            TelegramMsgCount: [
+                {
+                    PutRequest: {
+                        Item: {
+                            uid: {
+                                HASH: "test"
+                            },
+                            count: {
+                                N: 1
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    };
+    dynamodb.batchWriteItem(params, function(err, data) {
+        if (err) console.log(err, err.stack); // an error occurred
+        else     console.log(data);           // successful response
+        /*
+        data = {
+        }
+        */
+    });
+
     let response;
     const input = JSON.parse(event.body);
     try {

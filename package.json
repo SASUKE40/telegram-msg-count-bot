@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/SASUKE40/telegram-msg-count-bot#readme",
   "dependencies": {
+    "serverless-dynamodb-local": "^0.2.39",
     "telegraf": "^3.38.0"
   }
 }
