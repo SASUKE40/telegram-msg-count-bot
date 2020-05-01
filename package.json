@@ -4,7 +4,10 @@
   "description": "A telegram bot for counting msg",
   "main": "handler.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "prettier --write handler.js src/**/*.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dynamo": "sls dynamodb start --migrate",
+    "invoke": "serverless invoke local --function bot"
   },
   "repository": {
     "type": "git",
@@ -21,7 +24,11 @@
   },
   "homepage": "https://github.com/SASUKE40/telegram-msg-count-bot#readme",
   "dependencies": {
+    "aws-sdk": "^2.667.0",
     "serverless-dynamodb-local": "^0.2.39",
     "telegraf": "^3.38.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.0.5"
   }
 }
